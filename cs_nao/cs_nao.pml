@@ -5,7 +5,9 @@
         <BehaviorDescription name="behavior" src="behavior_1" xar="behavior.xar" />
     </BehaviorDescriptions>
     <Dialogs />
-    <Resources />
+    <Resources>
+        <File name="cut_version_stayin_alive" src="audio/cut_version_stayin_alive.mp3" />
+    </Resources>
     <Topics />
     <IgnoredPaths />
 </Package>
