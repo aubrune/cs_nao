@@ -209,7 +209,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -376,7 +376,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -1679,7 +1679,7 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Timeout (s)" inherits_from_parent="0" content_type="2" value="1.25" default_value="1" min="0" max="5000" tooltip="Duration the box waits before stimulating the output." id="5" />
                                                 <Parameter name="Trigger timerOutput if cancelled" inherits_from_parent="0" content_type="0" value="0" default_value="1" tooltip="If the box is currently waiting and cancelled, output will be stimulated." id="6" />
                                             </Box>
-                                            <Box name="Set Stiffness" id="18" localization="8" tooltip="Stiffen the motors selected in parameters." x="54" y="95">
+                                            <Box name="Set Stiffness" id="18" localization="8" tooltip="Stiffen the motors selected in parameters." x="101" y="475">
                                                 <bitmap>media/images/box/movement/stiffness.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -1730,7 +1730,7 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Motors stiffness (%)" inherits_from_parent="0" content_type="1" value="100" default_value="100" min="0" max="100" tooltip="Stiffness value the motors are set to." id="9" />
                                                 <Parameter name="Duration (s)" inherits_from_parent="0" content_type="2" value="1" default_value="1" min="0.02" max="10" tooltip="How much time to go to the max/min stiffness in seconds." id="10" />
                                             </Box>
-                                            <Box name="UDP_emitter" id="20" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="202" y="91">
+                                            <Box name="UDP_emitter" id="20" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="241" y="654">
                                                 <bitmap>media/images/box/box-python-script.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -1748,18 +1748,15 @@ class MyClass(GeneratedClass):
 
     def onInput_onStart(self):
         memProxy = ALProxy("ALMemory")
-        value = memProxy.getData("udp_input")
-        ip = memProxy.getData("udp_address")
-        self.logger.info("UDP Address is : {}".format(ip))
-        HOST = ip
-        PORT = 5005
-        MESSAGE = value
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+        HOST = memProxy.getData("udp_address")
+        PORT = memProxy.getData("udp_port")
+        MESSAGE = memProxy.getData("udp_input")
+
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.logger.info("Sending data : {}".format(MESSAGE))
         self.socket.connect((HOST, PORT))
         self.socket.send(MESSAGE)
-
         self.socket.close()
         self.logger.info("Stopping connection")
         self.onStopped()
@@ -1774,7 +1771,7 @@ class MyClass(GeneratedClass):
                                                 <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
                                                 <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
                                             </Box>
-                                            <Box name="Comment" id="21" localization="8" tooltip="To comment your behavior. Enter the text here and move the box where you like&#x0A;to add the comment.&#x0A;&#x0A;Note: This box is not functional and has no effect on the behavior." plugin="textedit_plugin" x="160" y="180">
+                                            <Box name="Comment" id="21" localization="8" tooltip="To comment your behavior. Enter the text here and move the box where you like&#x0A;to add the comment.&#x0A;&#x0A;Note: This box is not functional and has no effect on the behavior." plugin="textedit_plugin" x="176" y="698">
                                                 <bitmap>media/images/box/box-script.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -1784,12 +1781,12 @@ class MyClass(GeneratedClass):
 		GeneratedClass.__init__(self)
 
 	def onInput_onStart(self):
-		self.onStopped("Ce bloc-là est un test qui devait envoyer une trame UDP à l\'écran pour assurer une totale synchronisation entre les appareils")]]>
+		self.onStopped("Ce bloc-là envoie une trame UDP à l\'écran pour assurer une totale synchronisation entre les appareils")]]>
 </content>
                                                 </script>
                                                 <pluginContent>
                                                     <text>
-                                                        <![CDATA[Ce bloc-là est un test qui devait envoyer une trame UDP à l'écran pour assurer une totale synchronisation entre les appareils]]>
+                                                        <![CDATA[Ce bloc-là envoie une trame UDP à l'écran pour assurer une totale synchronisation entre les appareils]]>
 </text>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
@@ -2019,7 +2016,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -2186,7 +2183,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -2353,7 +2350,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -2520,7 +2517,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -2687,7 +2684,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -3811,6 +3808,47 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Motors stiffness (%)" inherits_from_parent="0" content_type="1" value="100" default_value="100" min="0" max="100" tooltip="Stiffness value the motors are set to." id="9" />
                                                 <Parameter name="Duration (s)" inherits_from_parent="0" content_type="2" value="1" default_value="1" min="0.02" max="10" tooltip="How much time to go to the max/min stiffness in seconds." id="10" />
                                             </Box>
+                                            <Box name="UDP_emitter" id="21" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="273" y="38">
+                                                <bitmap>media/images/box/box-python-script.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import socket
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        pass
+
+    def onInput_onStart(self):
+        memProxy = ALProxy("ALMemory")
+
+        HOST = memProxy.getData("udp_address")
+        PORT = memProxy.getData("udp_port")
+        MESSAGE = memProxy.getData("udp_input")
+
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.logger.info("Sending data : {}".format(MESSAGE))
+        self.socket.connect((HOST, PORT))
+        self.socket.send(MESSAGE)
+        self.socket.close()
+        self.logger.info("Stopping connection")
+        self.onStopped()
+
+    def onInput_onStop(self):
+        self.onUnload()
+        self.onStopped()]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                            </Box>
                                             <Link inputowner="2" indexofinput="2" outputowner="5" indexofoutput="3" />
                                             <Link inputowner="1" indexofinput="2" outputowner="3" indexofoutput="3" />
                                             <Link inputowner="4" indexofinput="2" outputowner="6" indexofoutput="3" />
@@ -3835,7 +3873,8 @@ class MyClass(GeneratedClass):
                                             <Link inputowner="12" indexofinput="2" outputowner="2" indexofoutput="4" />
                                             <Link inputowner="3" indexofinput="2" outputowner="12" indexofoutput="4" />
                                             <Link inputowner="20" indexofinput="2" outputowner="0" indexofoutput="2" />
-                                            <Link inputowner="5" indexofinput="2" outputowner="20" indexofoutput="3" />
+                                            <Link inputowner="21" indexofinput="2" outputowner="20" indexofoutput="3" />
+                                            <Link inputowner="5" indexofinput="2" outputowner="21" indexofoutput="4" />
                                         </Diagram>
                                     </BehaviorKeyframe>
                                 </BehaviorLayer>
@@ -4036,7 +4075,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -4203,7 +4242,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -4370,7 +4409,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -4537,7 +4576,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -5462,6 +5501,47 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Motors stiffness (%)" inherits_from_parent="0" content_type="1" value="100" default_value="100" min="0" max="100" tooltip="Stiffness value the motors are set to." id="9" />
                                                 <Parameter name="Duration (s)" inherits_from_parent="0" content_type="2" value="1" default_value="1" min="0.02" max="10" tooltip="How much time to go to the max/min stiffness in seconds." id="10" />
                                             </Box>
+                                            <Box name="UDP_emitter" id="23" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="284" y="45">
+                                                <bitmap>media/images/box/box-python-script.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import socket
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        pass
+
+    def onInput_onStart(self):
+        memProxy = ALProxy("ALMemory")
+
+        HOST = memProxy.getData("udp_address")
+        PORT = memProxy.getData("udp_port")
+        MESSAGE = memProxy.getData("udp_input")
+
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.logger.info("Sending data : {}".format(MESSAGE))
+        self.socket.connect((HOST, PORT))
+        self.socket.send(MESSAGE)
+        self.socket.close()
+        self.logger.info("Stopping connection")
+        self.onStopped()
+
+    def onInput_onStop(self):
+        self.onUnload()
+        self.onStopped()]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                            </Box>
                                             <Link inputowner="2" indexofinput="2" outputowner="5" indexofoutput="3" />
                                             <Link inputowner="1" indexofinput="2" outputowner="3" indexofoutput="3" />
                                             <Link inputowner="4" indexofinput="2" outputowner="6" indexofoutput="3" />
@@ -5484,7 +5564,8 @@ class MyClass(GeneratedClass):
                                             <Link inputowner="21" indexofinput="2" outputowner="17" indexofoutput="4" />
                                             <Link inputowner="20" indexofinput="2" outputowner="21" indexofoutput="4" />
                                             <Link inputowner="22" indexofinput="2" outputowner="0" indexofoutput="2" />
-                                            <Link inputowner="5" indexofinput="2" outputowner="22" indexofoutput="3" />
+                                            <Link inputowner="23" indexofinput="2" outputowner="22" indexofoutput="3" />
+                                            <Link inputowner="5" indexofinput="2" outputowner="23" indexofoutput="4" />
                                         </Diagram>
                                     </BehaviorKeyframe>
                                 </BehaviorLayer>
@@ -5685,7 +5766,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -5853,7 +5934,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -6020,7 +6101,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -7174,6 +7255,47 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Motors stiffness (%)" inherits_from_parent="0" content_type="1" value="100" default_value="100" min="0" max="100" tooltip="Stiffness value the motors are set to." id="9" />
                                                 <Parameter name="Duration (s)" inherits_from_parent="0" content_type="2" value="1" default_value="1" min="0.02" max="10" tooltip="How much time to go to the max/min stiffness in seconds." id="10" />
                                             </Box>
+                                            <Box name="UDP_emitter" id="20" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="221" y="19">
+                                                <bitmap>media/images/box/box-python-script.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import socket
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        pass
+
+    def onInput_onStart(self):
+        memProxy = ALProxy("ALMemory")
+
+        HOST = memProxy.getData("udp_address")
+        PORT = memProxy.getData("udp_port")
+        MESSAGE = memProxy.getData("udp_input")
+
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.logger.info("Sending data : {}".format(MESSAGE))
+        self.socket.connect((HOST, PORT))
+        self.socket.send(MESSAGE)
+        self.socket.close()
+        self.logger.info("Stopping connection")
+        self.onStopped()
+
+    def onInput_onStop(self):
+        self.onUnload()
+        self.onStopped()]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                            </Box>
                                             <Link inputowner="2" indexofinput="2" outputowner="5" indexofoutput="3" />
                                             <Link inputowner="1" indexofinput="2" outputowner="3" indexofoutput="3" />
                                             <Link inputowner="4" indexofinput="2" outputowner="6" indexofoutput="3" />
@@ -7194,7 +7316,8 @@ class MyClass(GeneratedClass):
                                             <Link inputowner="15" indexofinput="2" outputowner="12" indexofoutput="4" />
                                             <Link inputowner="42" indexofinput="2" outputowner="15" indexofoutput="4" />
                                             <Link inputowner="16" indexofinput="2" outputowner="0" indexofoutput="2" />
-                                            <Link inputowner="5" indexofinput="2" outputowner="16" indexofoutput="3" />
+                                            <Link inputowner="20" indexofinput="2" outputowner="16" indexofoutput="3" />
+                                            <Link inputowner="5" indexofinput="2" outputowner="20" indexofoutput="4" />
                                         </Diagram>
                                     </BehaviorKeyframe>
                                 </BehaviorLayer>
@@ -7446,7 +7569,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -7613,7 +7736,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -7780,7 +7903,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -8413,6 +8536,47 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Timeout (s)" inherits_from_parent="0" content_type="2" value="1" default_value="1" min="0" max="5000" tooltip="Duration the box waits before stimulating the output." id="5" />
                                                 <Parameter name="Trigger timerOutput if cancelled" inherits_from_parent="0" content_type="0" value="0" default_value="1" tooltip="If the box is currently waiting and cancelled, output will be stimulated." id="6" />
                                             </Box>
+                                            <Box name="UDP_emitter" id="20" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="216" y="20">
+                                                <bitmap>media/images/box/box-python-script.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import socket
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        pass
+
+    def onInput_onStart(self):
+        memProxy = ALProxy("ALMemory")
+
+        HOST = memProxy.getData("udp_address")
+        PORT = memProxy.getData("udp_port")
+        MESSAGE = memProxy.getData("udp_input")
+
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.logger.info("Sending data : {}".format(MESSAGE))
+        self.socket.connect((HOST, PORT))
+        self.socket.send(MESSAGE)
+        self.socket.close()
+        self.logger.info("Stopping connection")
+        self.onStopped()
+
+    def onInput_onStop(self):
+        self.onUnload()
+        self.onStopped()]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                            </Box>
                                             <Link inputowner="16" indexofinput="2" outputowner="0" indexofoutput="2" />
                                             <Link inputowner="2" indexofinput="2" outputowner="5" indexofoutput="3" />
                                             <Link inputowner="1" indexofinput="2" outputowner="3" indexofoutput="3" />
@@ -8425,10 +8589,11 @@ class MyClass(GeneratedClass):
                                             <Link inputowner="13" indexofinput="2" outputowner="12" indexofoutput="4" />
                                             <Link inputowner="50" indexofinput="2" outputowner="13" indexofoutput="4" />
                                             <Link inputowner="64" indexofinput="2" outputowner="6" indexofoutput="3" />
-                                            <Link inputowner="5" indexofinput="2" outputowner="16" indexofoutput="3" />
                                             <Link inputowner="0" indexofinput="4" outputowner="4" indexofoutput="4" />
                                             <Link inputowner="9" indexofinput="2" outputowner="64" indexofoutput="4" />
                                             <Link inputowner="8" indexofinput="2" outputowner="9" indexofoutput="4" />
+                                            <Link inputowner="5" indexofinput="2" outputowner="20" indexofoutput="4" />
+                                            <Link inputowner="20" indexofinput="2" outputowner="16" indexofoutput="3" />
                                         </Diagram>
                                     </BehaviorKeyframe>
                                 </BehaviorLayer>
@@ -8629,7 +8794,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -8796,7 +8961,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -8963,7 +9128,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -9130,7 +9295,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -10203,6 +10368,47 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Timeout (s)" inherits_from_parent="0" content_type="2" value="0.2" default_value="1" min="0" max="5000" tooltip="Duration the box waits before stimulating the output." id="5" />
                                                 <Parameter name="Trigger timerOutput if cancelled" inherits_from_parent="0" content_type="0" value="0" default_value="1" tooltip="If the box is currently waiting and cancelled, output will be stimulated." id="6" />
                                             </Box>
+                                            <Box name="UDP_emitter" id="20" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="128" y="189">
+                                                <bitmap>media/images/box/box-python-script.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import socket
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        pass
+
+    def onInput_onStart(self):
+        memProxy = ALProxy("ALMemory")
+
+        HOST = memProxy.getData("udp_address")
+        PORT = memProxy.getData("udp_port")
+        MESSAGE = memProxy.getData("udp_input")
+
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.logger.info("Sending data : {}".format(MESSAGE))
+        self.socket.connect((HOST, PORT))
+        self.socket.send(MESSAGE)
+        self.socket.close()
+        self.logger.info("Stopping connection")
+        self.onStopped()
+
+    def onInput_onStop(self):
+        self.onUnload()
+        self.onStopped()]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                            </Box>
                                             <Link inputowner="2" indexofinput="2" outputowner="5" indexofoutput="3" />
                                             <Link inputowner="1" indexofinput="2" outputowner="3" indexofoutput="3" />
                                             <Link inputowner="4" indexofinput="2" outputowner="6" indexofoutput="3" />
@@ -10213,7 +10419,6 @@ class MyClass(GeneratedClass):
                                             <Link inputowner="6" indexofinput="2" outputowner="9" indexofoutput="4" />
                                             <Link inputowner="10" indexofinput="2" outputowner="4" indexofoutput="4" />
                                             <Link inputowner="8" indexofinput="2" outputowner="10" indexofoutput="4" />
-                                            <Link inputowner="5" indexofinput="2" outputowner="16" indexofoutput="3" />
                                             <Link inputowner="63" indexofinput="2" outputowner="5" indexofoutput="3" />
                                             <Link inputowner="13" indexofinput="2" outputowner="63" indexofoutput="4" />
                                             <Link inputowner="133" indexofinput="2" outputowner="13" indexofoutput="4" />
@@ -10226,6 +10431,8 @@ class MyClass(GeneratedClass):
                                             <Link inputowner="17" indexofinput="2" outputowner="15" indexofoutput="4" />
                                             <Link inputowner="16" indexofinput="2" outputowner="0" indexofoutput="2" />
                                             <Link inputowner="0" indexofinput="4" outputowner="7" indexofoutput="4" />
+                                            <Link inputowner="5" indexofinput="2" outputowner="20" indexofoutput="4" />
+                                            <Link inputowner="20" indexofinput="2" outputowner="16" indexofoutput="3" />
                                         </Diagram>
                                     </BehaviorKeyframe>
                                 </BehaviorLayer>
@@ -10499,7 +10706,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>16</language>
+                                                    <language>19</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -10793,13 +11000,55 @@ class MyClass(GeneratedClass):
                                                 <Resource name="Standing" type="Lock" timeout="1" />
                                                 <Resource name="All motors" type="Lock" timeout="1" />
                                             </Box>
+                                            <Box name="UDP_emitter" id="20" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="145" y="62">
+                                                <bitmap>media/images/box/box-python-script.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import socket
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        pass
+
+    def onInput_onStart(self):
+        memProxy = ALProxy("ALMemory")
+
+        HOST = memProxy.getData("udp_address")
+        PORT = memProxy.getData("udp_port")
+        MESSAGE = memProxy.getData("udp_input")
+
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.logger.info("Sending data : {}".format(MESSAGE))
+        self.socket.connect((HOST, PORT))
+        self.socket.send(MESSAGE)
+        self.socket.close()
+        self.logger.info("Stopping connection")
+        self.onStopped()
+
+    def onInput_onStop(self):
+        self.onUnload()
+        self.onStopped()]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                            </Box>
                                             <Link inputowner="2" indexofinput="2" outputowner="5" indexofoutput="3" />
                                             <Link inputowner="16" indexofinput="2" outputowner="0" indexofoutput="2" />
                                             <Link inputowner="0" indexofinput="4" outputowner="6" indexofoutput="4" />
-                                            <Link inputowner="5" indexofinput="2" outputowner="16" indexofoutput="3" />
                                             <Link inputowner="1" indexofinput="2" outputowner="2" indexofoutput="4" />
                                             <Link inputowner="6" indexofinput="2" outputowner="1" indexofoutput="4" />
                                             <Link inputowner="25" indexofinput="2" outputowner="16" indexofoutput="3" />
+                                            <Link inputowner="5" indexofinput="2" outputowner="20" indexofoutput="4" />
+                                            <Link inputowner="20" indexofinput="2" outputowner="16" indexofoutput="3" />
                                         </Diagram>
                                     </BehaviorKeyframe>
                                 </BehaviorLayer>
@@ -11219,7 +11468,7 @@ class MyClass(GeneratedClass):
                                 <BehaviorLayer name="behavior_layer1">
                                     <BehaviorKeyframe name="keyframe1" index="1">
                                         <Diagram>
-                                            <Box name="Say Text" id="2" localization="8" tooltip="Say the text received on its input." x="523" y="58">
+                                            <Box name="Say Text" id="2" localization="8" tooltip="Say the text received on its input." x="718" y="73">
                                                 <bitmap>media/images/box/interaction/say.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -11274,7 +11523,7 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Voice shaping (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="150" tooltip='Used to modify at runtime the voice feature (tone, speed). In a slighty&#x0A;different way than pitch and speed, it gives a kind of &quot;gender or age&#x0A;modification&quot; effect.&#x0A;&#x0A;For instance, a quite good male derivation of female voice can be&#x0A;obtained setting this parameter to 78%.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the&#x0A;speed parameter. For example, if you want to decrease by 20% the voice&#x0A;shaping, you will have to increase by 20% the speed to keep a constant&#x0A;average speed.' id="5" />
                                                 <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                                             </Box>
-                                            <Box name="Localized Text" id="5" localization="8" tooltip="Send on the output the text associated with the robot&apos;s current voice language.&#x0A;You can display and edit the text associated with any language by&#x0A;selecting the language in the combobox.&#x0A;&#x0A;!!Warning!! The text sent on the output is NOT the displayed one but the one&#x0A;associated with the robot&apos;s current voice language." plugin="localizationbox_plugin" x="215" y="61">
+                                            <Box name="Localized Text" id="5" localization="8" tooltip="Send on the output the text associated with the robot&apos;s current voice language.&#x0A;You can display and edit the text associated with any language by&#x0A;selecting the language in the combobox.&#x0A;&#x0A;!!Warning!! The text sent on the output is NOT the displayed one but the one&#x0A;associated with the robot&apos;s current voice language." plugin="localizationbox_plugin" x="410" y="76">
                                                 <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -11381,13 +11630,13 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
                                                 <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Data sent when asked." id="3" />
                                             </Box>
-                                            <Box name="Say Text (1)" id="1" localization="8" tooltip="Say the text received on its input." x="532" y="277">
+                                            <Box name="Say Text (1)" id="1" localization="8" tooltip="Say the text received on its input." x="727" y="292">
                                                 <bitmap>media/images/box/interaction/say.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -11442,7 +11691,7 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Voice shaping (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="150" tooltip='Used to modify at runtime the voice feature (tone, speed). In a slighty&#x0A;different way than pitch and speed, it gives a kind of &quot;gender or age&#x0A;modification&quot; effect.&#x0A;&#x0A;For instance, a quite good male derivation of female voice can be&#x0A;obtained setting this parameter to 78%.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the&#x0A;speed parameter. For example, if you want to decrease by 20% the voice&#x0A;shaping, you will have to increase by 20% the speed to keep a constant&#x0A;average speed.' id="5" />
                                                 <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                                             </Box>
-                                            <Box name="Localized Text (1)" id="3" localization="8" tooltip="Send on the output the text associated with the robot&apos;s current voice language.&#x0A;You can display and edit the text associated with any language by&#x0A;selecting the language in the combobox.&#x0A;&#x0A;!!Warning!! The text sent on the output is NOT the displayed one but the one&#x0A;associated with the robot&apos;s current voice language." plugin="localizationbox_plugin" x="224" y="280">
+                                            <Box name="Localized Text (1)" id="3" localization="8" tooltip="Send on the output the text associated with the robot&apos;s current voice language.&#x0A;You can display and edit the text associated with any language by&#x0A;selecting the language in the combobox.&#x0A;&#x0A;!!Warning!! The text sent on the output is NOT the displayed one but the one&#x0A;associated with the robot&apos;s current voice language." plugin="localizationbox_plugin" x="419" y="295">
                                                 <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -11548,13 +11797,13 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
                                                 <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Data sent when asked." id="3" />
                                             </Box>
-                                            <Box name="Say Text (2)" id="4" localization="8" tooltip="Say the text received on its input." x="528" y="496">
+                                            <Box name="Say Text (2)" id="4" localization="8" tooltip="Say the text received on its input." x="723" y="511">
                                                 <bitmap>media/images/box/interaction/say.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -11609,7 +11858,7 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Voice shaping (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="150" tooltip='Used to modify at runtime the voice feature (tone, speed). In a slighty&#x0A;different way than pitch and speed, it gives a kind of &quot;gender or age&#x0A;modification&quot; effect.&#x0A;&#x0A;For instance, a quite good male derivation of female voice can be&#x0A;obtained setting this parameter to 78%.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the&#x0A;speed parameter. For example, if you want to decrease by 20% the voice&#x0A;shaping, you will have to increase by 20% the speed to keep a constant&#x0A;average speed.' id="5" />
                                                 <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                                             </Box>
-                                            <Box name="Localized Text (2)" id="6" localization="8" tooltip="Send on the output the text associated with the robot&apos;s current voice language.&#x0A;You can display and edit the text associated with any language by&#x0A;selecting the language in the combobox.&#x0A;&#x0A;!!Warning!! The text sent on the output is NOT the displayed one but the one&#x0A;associated with the robot&apos;s current voice language." plugin="localizationbox_plugin" x="220" y="499">
+                                            <Box name="Localized Text (2)" id="6" localization="8" tooltip="Send on the output the text associated with the robot&apos;s current voice language.&#x0A;You can display and edit the text associated with any language by&#x0A;selecting the language in the combobox.&#x0A;&#x0A;!!Warning!! The text sent on the output is NOT the displayed one but the one&#x0A;associated with the robot&apos;s current voice language." plugin="localizationbox_plugin" x="415" y="514">
                                                 <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -11715,13 +11964,13 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
                                                 <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Data sent when asked." id="3" />
                                             </Box>
-                                            <Box name="Say Text (3)" id="7" localization="8" tooltip="Say the text received on its input." x="528" y="773">
+                                            <Box name="Say Text (3)" id="7" localization="8" tooltip="Say the text received on its input." x="723" y="788">
                                                 <bitmap>media/images/box/interaction/say.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -11776,7 +12025,7 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Voice shaping (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="150" tooltip='Used to modify at runtime the voice feature (tone, speed). In a slighty&#x0A;different way than pitch and speed, it gives a kind of &quot;gender or age&#x0A;modification&quot; effect.&#x0A;&#x0A;For instance, a quite good male derivation of female voice can be&#x0A;obtained setting this parameter to 78%.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the&#x0A;speed parameter. For example, if you want to decrease by 20% the voice&#x0A;shaping, you will have to increase by 20% the speed to keep a constant&#x0A;average speed.' id="5" />
                                                 <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                                             </Box>
-                                            <Box name="Localized Text (3)" id="8" localization="8" tooltip="Send on the output the text associated with the robot&apos;s current voice language.&#x0A;You can display and edit the text associated with any language by&#x0A;selecting the language in the combobox.&#x0A;&#x0A;!!Warning!! The text sent on the output is NOT the displayed one but the one&#x0A;associated with the robot&apos;s current voice language." plugin="localizationbox_plugin" x="220" y="776">
+                                            <Box name="Localized Text (3)" id="8" localization="8" tooltip="Send on the output the text associated with the robot&apos;s current voice language.&#x0A;You can display and edit the text associated with any language by&#x0A;selecting the language in the combobox.&#x0A;&#x0A;!!Warning!! The text sent on the output is NOT the displayed one but the one&#x0A;associated with the robot&apos;s current voice language." plugin="localizationbox_plugin" x="415" y="791">
                                                 <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -11882,13 +12131,13 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>19</language>
+                                                    <language>-1</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
                                                 <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Data sent when asked." id="3" />
                                             </Box>
-                                            <Box name="Wait" id="11" localization="8" tooltip="Wait a moment before sending a signal on the output. &#x0A;Can be stopped anytime. &#x0A;Stimulating the input again before output is activated restarts the waiting period.&#x0A;" x="681" y="59">
+                                            <Box name="Wait" id="11" localization="8" tooltip="Wait a moment before sending a signal on the output. &#x0A;Can be stopped anytime. &#x0A;Stimulating the input again before output is activated restarts the waiting period.&#x0A;" x="876" y="74">
                                                 <bitmap>media/images/box/wait.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -11928,7 +12177,7 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Timeout (s)" inherits_from_parent="0" content_type="2" value="0.3" default_value="1" min="0" max="5000" tooltip="Duration the box waits before stimulating the output." id="5" />
                                                 <Parameter name="Trigger timerOutput if cancelled" inherits_from_parent="0" content_type="0" value="0" default_value="1" tooltip="If the box is currently waiting and cancelled, output will be stimulated." id="6" />
                                             </Box>
-                                            <Box name="Wait (1)" id="9" localization="8" tooltip="Wait a moment before sending a signal on the output. &#x0A;Can be stopped anytime. &#x0A;Stimulating the input again before output is activated restarts the waiting period.&#x0A;" x="710" y="276">
+                                            <Box name="Wait (1)" id="9" localization="8" tooltip="Wait a moment before sending a signal on the output. &#x0A;Can be stopped anytime. &#x0A;Stimulating the input again before output is activated restarts the waiting period.&#x0A;" x="905" y="291">
                                                 <bitmap>media/images/box/wait.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -11968,7 +12217,7 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Timeout (s)" inherits_from_parent="0" content_type="2" value="0.45" default_value="1" min="0" max="5000" tooltip="Duration the box waits before stimulating the output." id="5" />
                                                 <Parameter name="Trigger timerOutput if cancelled" inherits_from_parent="0" content_type="0" value="0" default_value="1" tooltip="If the box is currently waiting and cancelled, output will be stimulated." id="6" />
                                             </Box>
-                                            <Box name="Wait (2)" id="10" localization="8" tooltip="Wait a moment before sending a signal on the output. &#x0A;Can be stopped anytime. &#x0A;Stimulating the input again before output is activated restarts the waiting period.&#x0A;" x="694" y="505">
+                                            <Box name="Wait (2)" id="10" localization="8" tooltip="Wait a moment before sending a signal on the output. &#x0A;Can be stopped anytime. &#x0A;Stimulating the input again before output is activated restarts the waiting period.&#x0A;" x="889" y="520">
                                                 <bitmap>media/images/box/wait.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -12059,7 +12308,7 @@ class MyClass(GeneratedClass):
                                                 <Parameter name="Motors stiffness (%)" inherits_from_parent="0" content_type="1" value="100" default_value="100" min="0" max="100" tooltip="Stiffness value the motors are set to." id="9" />
                                                 <Parameter name="Duration (s)" inherits_from_parent="0" content_type="2" value="1" default_value="1" min="0.02" max="10" tooltip="How much time to go to the max/min stiffness in seconds." id="10" />
                                             </Box>
-                                            <Box name="PointAtSelfRightArm_01" id="48" localization="8" tooltip="ID : #01B 0007&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Me&#x0A;- Myself&#x0A;- I&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Flex&#x0A;End stance : Center" x="703" y="177">
+                                            <Box name="PointAtSelfRightArm_01" id="48" localization="8" tooltip="ID : #01B 0007&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Me&#x0A;- Myself&#x0A;- I&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Flex&#x0A;End stance : Center" x="898" y="192">
                                                 <bitmap>media/images/box/movement/move.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -12152,7 +12401,7 @@ class MyClass(GeneratedClass):
                                                 <Resource name="Standing" type="Lock" timeout="1" />
                                                 <Resource name="All motors" type="Lock" timeout="1" />
                                             </Box>
-                                            <Box name="PointAtUserBothHands_01" id="52" localization="8" tooltip="ID : #01B 0010&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Your&#x0A;- Yourself&#x0A;- Yours&#x0A;- Them&#x0A;- Him / Her&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : Yes&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : LeanBack&#x0A;End stance : Center" x="534" y="172">
+                                            <Box name="PointAtUserBothHands_01" id="52" localization="8" tooltip="ID : #01B 0010&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Your&#x0A;- Yourself&#x0A;- Yours&#x0A;- Them&#x0A;- Him / Her&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : Yes&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : LeanBack&#x0A;End stance : Center" x="729" y="187">
                                                 <bitmap>media/images/box/movement/move.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -12240,7 +12489,7 @@ class MyClass(GeneratedClass):
                                                 <Resource name="Standing" type="Lock" timeout="1" />
                                                 <Resource name="All motors" type="Lock" timeout="1" />
                                             </Box>
-                                            <Box name="SlowBowWithArms_01" id="42" localization="8" tooltip="ID : #01C 0026&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Go&#x0A;- Affirmative&#x0A;- Can&#x0A;- Indicate&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : Yes&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : Center" x="861" y="171">
+                                            <Box name="SlowBowWithArms_01" id="42" localization="8" tooltip="ID : #01C 0026&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Go&#x0A;- Affirmative&#x0A;- Can&#x0A;- Indicate&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : Yes&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : Center" x="1056" y="186">
                                                 <bitmap>media/images/box/movement/move.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -12362,7 +12611,7 @@ class MyClass(GeneratedClass):
                                                 <Resource name="Standing" type="Lock" timeout="1" />
                                                 <Resource name="All motors" type="Lock" timeout="1" />
                                             </Box>
-                                            <Box name="SpreadArms_FlexEnd_01" id="22" localization="8" tooltip='ID : #01F 0021&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Wow&#x0A;- &quot;!&quot;&#x0A;- Awesome&#x0A;- Great!&#x0A;- Impressive&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : LeanRight&#x0A;End stance : Flex' x="542" y="386">
+                                            <Box name="SpreadArms_FlexEnd_01" id="22" localization="8" tooltip='ID : #01F 0021&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Wow&#x0A;- &quot;!&quot;&#x0A;- Awesome&#x0A;- Great!&#x0A;- Impressive&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : LeanRight&#x0A;End stance : Flex' x="737" y="401">
                                                 <bitmap>media/images/box/movement/move.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -12470,7 +12719,7 @@ class MyClass(GeneratedClass):
                                                 <Resource name="Standing" type="Lock" timeout="1" />
                                                 <Resource name="All motors" type="Lock" timeout="1" />
                                             </Box>
-                                            <Box name="BothArmsBumpInFront_01" id="63" localization="8" tooltip="ID : #01A 0001&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Here&#x0A;- There&#x0A;- Now&#x0A;- Present&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : Yes&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : Center" x="525" y="615">
+                                            <Box name="BothArmsBumpInFront_01" id="63" localization="8" tooltip="ID : #01A 0001&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Here&#x0A;- There&#x0A;- Now&#x0A;- Present&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : Yes&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : Center" x="720" y="630">
                                                 <bitmap>media/images/box/movement/move.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -12572,7 +12821,7 @@ class MyClass(GeneratedClass):
                                                 <Resource name="Standing" type="Lock" timeout="1" />
                                                 <Resource name="All motors" type="Lock" timeout="1" />
                                             </Box>
-                                            <Box name="BothArmsBump_LeanRight_01" id="24" localization="8" tooltip="ID : #01A 0002&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- There&#x0A;- Somewhere&#x0A;- Past&#x0A;- Right&#x0A;- Near&#x0A;- Down&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : Yes&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : LeanRight" x="664" y="614">
+                                            <Box name="BothArmsBump_LeanRight_01" id="24" localization="8" tooltip="ID : #01A 0002&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- There&#x0A;- Somewhere&#x0A;- Past&#x0A;- Right&#x0A;- Near&#x0A;- Down&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : Yes&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : LeanRight" x="859" y="629">
                                                 <bitmap>media/images/box/movement/move.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -12683,7 +12932,7 @@ class MyClass(GeneratedClass):
                                                 <Resource name="Standing" type="Lock" timeout="1" />
                                                 <Resource name="All motors" type="Lock" timeout="1" />
                                             </Box>
-                                            <Box name="StrongArmsOpen_FlexEnd_01" id="129" localization="8" tooltip="ID : #01A 0022&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Now&#x0A;- Somewhere&#x0A;- Front&#x0A;- Near&#x0A;- Present&#x0A;- Down&#x0A;- Low&#x0A;- Everywhere&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : Yes&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : Center" x="800" y="617">
+                                            <Box name="StrongArmsOpen_FlexEnd_01" id="129" localization="8" tooltip="ID : #01A 0022&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Now&#x0A;- Somewhere&#x0A;- Front&#x0A;- Near&#x0A;- Present&#x0A;- Down&#x0A;- Low&#x0A;- Everywhere&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : Yes&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : Center" x="995" y="632">
                                                 <bitmap>media/images/box/movement/move.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -12785,7 +13034,7 @@ class MyClass(GeneratedClass):
                                                 <Resource name="Standing" type="Lock" timeout="1" />
                                                 <Resource name="All motors" type="Lock" timeout="1" />
                                             </Box>
-                                            <Box name="OpenArmInFrontWithBump_01" id="12" localization="8" tooltip="ID : #01B 0005&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- You&#x0A;- Yourslef&#x0A;- Yours&#x0A;- Everybody&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : Center" x="531" y="880">
+                                            <Box name="OpenArmInFrontWithBump_01" id="12" localization="8" tooltip="ID : #01B 0005&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- You&#x0A;- Yourslef&#x0A;- Yours&#x0A;- Everybody&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : Center" x="726" y="895">
                                                 <bitmap>media/images/box/movement/move.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -12858,7 +13107,7 @@ class MyClass(GeneratedClass):
                                                 <Resource name="Standing" type="Lock" timeout="1" />
                                                 <Resource name="All motors" type="Lock" timeout="1" />
                                             </Box>
-                                            <Box name="OfferLeftHandThenRightHand_01" id="13" localization="8" tooltip="ID : #01G 0018&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Twice&#x0A;- And&#x0A;- 1,2&#x0A;- Both&#x0A;- Or&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : Center" x="940" y="624">
+                                            <Box name="OfferLeftHandThenRightHand_01" id="13" localization="8" tooltip="ID : #01G 0018&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Twice&#x0A;- And&#x0A;- 1,2&#x0A;- Both&#x0A;- Or&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : Center" x="1135" y="639">
                                                 <bitmap>media/images/box/movement/move.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -12968,6 +13217,47 @@ class MyClass(GeneratedClass):
                                                 <Resource name="Standing" type="Lock" timeout="1" />
                                                 <Resource name="All motors" type="Lock" timeout="1" />
                                             </Box>
+                                            <Box name="UDP_emitter" id="20" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="249" y="94">
+                                                <bitmap>media/images/box/box-python-script.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import socket
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        pass
+
+    def onInput_onStart(self):
+        memProxy = ALProxy("ALMemory")
+
+        HOST = memProxy.getData("udp_address")
+        PORT = memProxy.getData("udp_port")
+        MESSAGE = memProxy.getData("udp_input")
+
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.logger.info("Sending data : {}".format(MESSAGE))
+        self.socket.connect((HOST, PORT))
+        self.socket.send(MESSAGE)
+        self.socket.close()
+        self.logger.info("Stopping connection")
+        self.onStopped()
+
+    def onInput_onStop(self):
+        self.onUnload()
+        self.onStopped()]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                            </Box>
                                             <Link inputowner="2" indexofinput="2" outputowner="5" indexofoutput="3" />
                                             <Link inputowner="1" indexofinput="2" outputowner="3" indexofoutput="3" />
                                             <Link inputowner="4" indexofinput="2" outputowner="6" indexofoutput="3" />
@@ -12979,7 +13269,6 @@ class MyClass(GeneratedClass):
                                             <Link inputowner="6" indexofinput="2" outputowner="9" indexofoutput="4" />
                                             <Link inputowner="10" indexofinput="2" outputowner="4" indexofoutput="4" />
                                             <Link inputowner="8" indexofinput="2" outputowner="10" indexofoutput="4" />
-                                            <Link inputowner="5" indexofinput="2" outputowner="16" indexofoutput="3" />
                                             <Link inputowner="16" indexofinput="2" outputowner="0" indexofoutput="2" />
                                             <Link inputowner="52" indexofinput="2" outputowner="5" indexofoutput="3" />
                                             <Link inputowner="48" indexofinput="2" outputowner="52" indexofoutput="4" />
@@ -12990,6 +13279,8 @@ class MyClass(GeneratedClass):
                                             <Link inputowner="13" indexofinput="2" outputowner="129" indexofoutput="4" />
                                             <Link inputowner="12" indexofinput="2" outputowner="8" indexofoutput="3" />
                                             <Link inputowner="63" indexofinput="2" outputowner="6" indexofoutput="3" />
+                                            <Link inputowner="5" indexofinput="2" outputowner="20" indexofoutput="4" />
+                                            <Link inputowner="20" indexofinput="2" outputowner="16" indexofoutput="3" />
                                         </Diagram>
                                     </BehaviorKeyframe>
                                 </BehaviorLayer>
@@ -13682,7 +13973,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Timeout (s)" inherits_from_parent="0" content_type="2" value="1.3" default_value="1" min="0" max="5000" tooltip="Duration the box waits before stimulating the output." id="5" />
                             <Parameter name="Trigger timerOutput if cancelled" inherits_from_parent="0" content_type="0" value="0" default_value="1" tooltip="If the box is currently waiting and cancelled, output will be stimulated." id="6" />
                         </Box>
-                        <Box name="Shutdown" id="16" localization="1" tooltip="Shutdown the robot if it isnt virtual.&#x0A;&#x0A;V1.1.0&#x0A;" x="918" y="773">
+                        <Box name="Shutdown" id="16" localization="1" tooltip="Shutdown the robot if it isnt virtual.&#x0A;&#x0A;V1.1.0&#x0A;" x="916" y="756">
                             <bitmap>media/images/box/box-script.png</bitmap>
                             <script language="4">
                                 <content>
@@ -13726,11 +14017,16 @@ class MyClass(GeneratedClass):
         pass
 
     def onInput_onStart(self):
-        data = "172.17.4.5" #Adresse IP où la trame doit être envoyé à chaque début de speech
+        IP_ADDRESS = "172.17.4.27" #Adresse IP où la trame doit être envoyée à chaque début de speech
+        PORT_NUMBER = 5585         #Port où la trame doit être envoyée à chaque début de speech
 
         memProxy = ALProxy("ALMemory")
-        memProxy.insertData("udp_address", data)
-        self.logger.info("UDP Address is : {}".format(data))
+        memProxy.insertData("udp_address", IP_ADDRESS)
+        memProxy.insertData("udp_port", PORT_NUMBER)
+
+        self.logger.info("Chosen address for UDP frame is : {}".format(IP_ADDRESS))
+        self.logger.info("Chosen port for UDP frame is : {}".format(PORT_NUMBER))
+
         self.onStopped()
 
     def onInput_onStop(self):
@@ -13743,7 +14039,7 @@ class MyClass(GeneratedClass):
                             <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
                             <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
                         </Box>
-                        <Box name="Comment" id="26" localization="8" tooltip="To comment your behavior. Enter the text here and move the box where you like&#x0A;to add the comment.&#x0A;&#x0A;Note: This box is not functional and has no effect on the behavior." plugin="textedit_plugin" x="79" y="534">
+                        <Box name="Comment" id="26" localization="8" tooltip="To comment your behavior. Enter the text here and move the box where you like&#x0A;to add the comment.&#x0A;&#x0A;Note: This box is not functional and has no effect on the behavior." plugin="textedit_plugin" x="82" y="539">
                             <bitmap>media/images/box/box-script.png</bitmap>
                             <script language="4">
                                 <content>
@@ -13753,12 +14049,12 @@ class MyClass(GeneratedClass):
 		GeneratedClass.__init__(self)
 
 	def onInput_onStart(self):
-		self.onStopped("Ce bloc-là est un test, qui devait permettre de choisir l\'adresse IP de l\'écran pour lui envoyer une trame UDP plus tard")]]>
+		self.onStopped("Ce bloc-là permet de choisir l\'adresse IP de l\'écran pour lui envoyer une trame UDP après chaque sortie de repos")]]>
 </content>
                             </script>
                             <pluginContent>
                                 <text>
-                                    <![CDATA[Ce bloc-là est un test, qui devait permettre de choisir l'adresse IP de l'écran pour lui envoyer une trame UDP plus tard]]>
+                                    <![CDATA[Ce bloc-là permet de choisir l'adresse IP de l'écran pour lui envoyer une trame UDP après chaque sortie de repos]]>
 </text>
                             </pluginContent>
                             <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
@@ -13865,7 +14161,7 @@ class MyClass(GeneratedClass):
 
 		self.tts = ALProxy("ALTextToSpeech")
 		self.sentences = {
-			"Arabic" : " مرحبا ",
+			"Arabic" : "  ",
 			"Czech" : " Ahoj ",
 			"Danish" : " Hej ",
 			"German" : " Hallo ",
@@ -13895,7 +14191,7 @@ class MyClass(GeneratedClass):
                                                 </script>
                                                 <pluginContent>
                                                     <arabic>
-                                                        <![CDATA[مرحبا]]>
+                                                        <![CDATA[]]>
 </arabic>
                                                     <czech>
                                                         <![CDATA[Ahoj]]>
@@ -13957,7 +14253,7 @@ class MyClass(GeneratedClass):
                                                     <chinese>
                                                         <![CDATA[]]>
 </chinese>
-                                                    <language>8</language>
+                                                    <language>11</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
