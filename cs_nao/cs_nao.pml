@@ -9,5 +9,7 @@
         <File name="cut_version_stayin_alive" src="audio/cut_version_stayin_alive.mp3" />
     </Resources>
     <Topics />
-    <IgnoredPaths />
+    <IgnoredPaths>
+        <Path src="translations" />
+    </IgnoredPaths>
 </Package>
